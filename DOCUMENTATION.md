@@ -17,7 +17,7 @@ index.html
 │   ├── CDN: jsPDF@2.5.2               (PNG → PDF wrapper)
 │   └── <style>                        (all CSS, ~400 lines)
 └── <body>
-    ├── .search-panel                  (step 1: search for a session)
+    ├── .search-panel                  (card-type dropdown + session search)
     ├── .controls (hidden initially)   (size toggle + export buttons)
     └── .preview-wrapper (hidden)      (the actual print card)
         └── .print-surface             (the 4-zone card)
@@ -31,6 +31,15 @@ index.html
 **Key constraint:** Both partner logos are embedded as base64 inside the HTML. This is why the file is ~279 KB despite having no external assets at runtime. The card can be used fully offline after initial load.
 
 **Initial state:** `.controls` and `.preview-wrapper` are hidden via `style="display:none"`. They are only revealed on the first successful call to `populateCard()`, ensuring the user always searches before seeing a card.
+
+**Card type selector:** `#session-card-type` sits beside the search input. The search row also includes `#btn-clear`, which resets the current search/card state. The selector has two options:
+
+| Label | Value | Layout |
+|-------|-------|--------|
+| Medical Amyloidosis Session - Spotlight | `foundation` | New 3-logo card |
+| Medical Amyloidosis Session - Non Spotlight | `classic` | Original card |
+
+Changing the dropdown calls `setLayout()` and then `resetSearchState()`: the search text is cleared, results are removed, controls/preview are hidden, and the user is prompted to enter a new search term.
 
 ---
 
@@ -60,10 +69,12 @@ The `.print-surface` is a vertical flex column. Zones 1, 2, and 4 are `flex-shri
 ```
 ┌──────────────────────────────────────────────────────┐
 │  ZONE 1 · Logo Bar (72px)                            │
-│  [STTT logo] | [date · time] | [partner logo]        │
+│  New: [partner] | [disease foundation] | [STTT]     │
+│  Old: [STTT] | [date · time] | [foundation]         │
 ├──────────────────────────────────────────────────────┤
 │  ZONE 2 · Session Band (maroon)                      │
-│  [series label (optional)] [session title] [pill]    │
+│  New: [series label] [session title]                 │
+│  Old: [series label] [session title] [partner pill]  │
 ├──────────────────────────────────────────────────────┤
 │  ZONE 3 · Presenter Section (flex: 1)                │
 │  [headshot] │ [date pill + desc + CTA] │ [QR code]   │
@@ -76,16 +87,15 @@ The `.print-surface` is a vertical flex column. Zones 1, 2, and 4 are `flex-shri
 
 `display: flex; justify-content: space-between; height: 72px`
 
-| Element            | Class / ID            | Notes                                        |
-|--------------------|-----------------------|----------------------------------------------|
-| STTT logo          | `.logo-left`          | base64 PNG, 48px tall, max-width 160px       |
-| Vertical divider   | `.logo-divider`       | 1px × 46px, `--border-rose`                  |
-| Date block         | `#header-date`        | Populated by JS: "Thursday, May 21st"        |
-| Time block         | `#header-time`        | Populated by JS: "@ 6pm ET"                  |
-| Vertical divider   | `.logo-divider`       | Second instance                              |
-| Partner logo       | `.logo-right`         | base64 PNG, 48px tall, max-width 180px       |
+| Element                  | Class / ID      | Notes                                           |
+|--------------------------|-----------------|-------------------------------------------------|
+| Partner logo             | `#uoc-pill`     | Base64 PNG reused from the old partner pill; moved into header by JS |
+| Divider                  | `.logo-divider` | Visible separator between each header logo      |
+| Disease foundation logo  | `.logo-left`    | Default Amyloidosis Foundation logo; in Non Spotlight, replaced by matched `field_indication_logo` |
+| Divider                  | `.logo-divider` | Visible separator between each header logo      |
+| Right logo               | `.logo-right`   | Spotlight default OAV, Non Spotlight default STTT; in Spotlight, replaced by matched `field_indication_logo` |
 
-The center date/time block uses `flex: 1` to expand between the two dividers.
+The center date/time block still exists for the classic layout. In the new `foundation` layout it is hidden, and date/time display lives in Zone 3.
 
 ### Zone 2 — Session Band (`.session-band`)
 
@@ -96,9 +106,9 @@ The center date/time block uses `flex: 1` to expand between the two dividers.
 | Series label row  | `#band-series-row`      | `display: none` → `.visible` when `series_label` present |
 | Series dot (SVG)  | `.band-series-dot`      | Gold star SVG icon, always inside row  |
 | Series text       | `#band-series-label`    | `--gold` colour, italic, 14px          |
-| Session title     | `#band-title`           | White, 800 weight, 20px                |
-| Partner pill      | `#uoc-pill`             | `display: none` → `.visible` when `partner` present; white bg, rounded |
-| Pill logo         | `img` inside `#uoc-pill`| 9rem width, base64 embedded            |
+| Session title     | `#band-title`           | White, 700 weight, 17px; stays one line when it fits, otherwise splits at the first colon |
+
+In the `foundation` layout, there is no partner pill in the maroon band; `#uoc-pill` is moved into Zone 1 as the left logo. In the `classic` layout, the same element is moved back into the maroon band as the original partner pill.
 
 ### Zone 3 — Presenter Section (`.presenter-section`)
 
@@ -112,8 +122,8 @@ Three fixed-width columns:
 - `#headshot-img`: shown when `headshot_base64` available, hidden otherwise
 - `#headshot-fallback`: shown when no headshot; text "No photo"
 - `#presenter-name`: maroon, 11.5px, 800 weight — assembled from title + first/last + suffix
-- `#presenter-cred`: always empty (field exists, unused by current API)
-- `#presenter-role`: populated with `row.partner` — note naming mismatch (see §7)
+- `#presenter-cred`: populated from `presenter.name_suffix`
+- `#presenter-role`: populated with `row.partner`
 
 **Column 2 — Content (`.content-col`)**
 
@@ -151,11 +161,26 @@ The 3×5 variant uses a cascade of `.print-surface.size-3x5 .{component}` overri
 
 ## 5. JavaScript Modules
 
-### 5.1 Size Toggle — `setSize(s)`
+### 5.1 Card Type — `setLayout(layout)`
+
+Switches between the two card types selected in `#session-card-type`.
+
+| Dropdown label | Internal value | Surface class | Behaviour |
+|----------------|----------------|---------------|-----------|
+| Medical Amyloidosis Session - Spotlight | `foundation` | `.layout-foundation` | New 3-logo header layout; partner logo moves to Zone 1; right logo defaults to OAV, then switches to matched indication logo when available |
+| Medical Amyloidosis Session - Non Spotlight | `classic` | `.layout-classic` | Original layout; partner logo moves back to the maroon band; right logo stays STTT; left logo switches to matched indication logo when available |
+
+The dropdown `change` handler calls `resetSearchState()` after switching layout, so stale session data is never reused across card types.
+
+### 5.2 Reset Search — `resetSearchState(message)`
+
+Clears the search input, cancels any pending debounce, increments `searchToken` to invalidate in-flight API responses, clears search results, hides `#controls-bar` and `#preview-wrapper`, updates `#search-status`, and focuses the search input. It is called by the card-type dropdown and the `Clear` button.
+
+### 5.3 Size Toggle — `setSize(s)`
 
 Adds/removes `.size-3x5` from `#print-surface`. Toggles `.active` class on the two size buttons. Updates the `#size-label` text.
 
-### 5.2 Print — `handlePrint()`
+### 5.4 Print — `handlePrint()`
 
 1. Detects current size.
 2. Dynamically injects a `<style id="__print-page-style">` with `@page { size: 6in 4in landscape; margin: 0 }` (or 5in 3in for 3×5).
@@ -164,7 +189,7 @@ Adds/removes `.size-3x5` from `#print-surface`. Toggles `.active` class on the t
 
 The `@media print` rule hides `.controls`, `.card-label`, and `.search-panel` automatically.
 
-### 5.3 Capture Pipeline — `captureCard(scale, pxW, pxH)`
+### 5.5 Capture Pipeline — `captureCard(scale, pxW, pxH)`
 
 Core rasterisation function used by both PNG and PDF exports.
 
@@ -179,14 +204,14 @@ Fix implemented:
 
 Scale is computed as: `cfg.pxW / surface.offsetWidth` — i.e., how much to multiply the rendered CSS inches to reach target raster pixels.
 
-### 5.4 PNG Export — `downloadPNG()`
+### 5.6 PNG Export — `downloadPNG()`
 
 1. Determines size config (px dimensions + filename tag).
 2. Calls `captureCard()`.
 3. Creates a temporary `<a>` element, sets `href` to the data URL, triggers `.click()`, then removes it.
-4. Filename: `facebook-promo-4x6.png` or `facebook-promo-3x5.png`.
+4. Filename includes layout and size, e.g. `facebook-promo-3-logo-4x6.png` or `facebook-promo-classic-3x5.png`.
 
-### 5.5 PDF Export — `downloadPDF()`
+### 5.7 PDF Export — `downloadPDF()`
 
 1. Same size detection as PNG.
 2. Calls `captureCard()` to get a PNG data URL.
@@ -194,14 +219,16 @@ Scale is computed as: `cfg.pxW / surface.offsetWidth` — i.e., how much to mult
 4. Calls `pdf.addImage(dataUrl, 'PNG', 0, 0, wIn, hIn)` — zero margins, fills page exactly.
 5. Calls `pdf.save(filename)`.
 
-### 5.6 Search — `runSearch()`
+### 5.8 Search — `runSearch()`
 
 **API endpoint:** `https://www.somebodytotalkto.com/api/spotlight/microsite/session/search?q={query}`
 
 **Trigger conditions:**
 - Input `keydown` Enter → immediate
 - Button click → immediate (clears debounce to prevent duplicate)
+- Clear button → calls `resetSearchState()`
 - Input `input` event → 400ms debounce, triggers only when `length >= 3`
+- Input `paste` event → trims leading/trailing whitespace from pasted search text
 - Minimum query length: 2 characters
 
 **Race condition protection:** A `searchToken` integer is incremented on every new search call. The token value is captured in closure at call time. Before rendering results (or errors), the response checks if `token === searchToken`. If not, the response is silently discarded. This prevents out-of-order responses from stomping a newer result.
@@ -211,20 +238,21 @@ Scale is computed as: `cfg.pxW / surface.offsetWidth` — i.e., how much to mult
 - 1 result → auto-calls `populateCard(rows[0])`
 - 2+ results → renders clickable `.search-result-item` list; each click calls `populateCard(row)` and clears the list
 
-### 5.7 Populate Card — `populateCard(row)`
+### 5.9 Populate Card — `populateCard(row)`
 
 Maps API response fields onto DOM elements. Detailed field-by-field mapping:
 
 | API Field              | DOM Element           | Transform applied                                              |
 |------------------------|-----------------------|----------------------------------------------------------------|
-| `row.date`             | `#header-date`        | Parsed → "Thursday, May 21st" (UTC parse, ordinal suffix)      |
-| `row.times_by_zone.ET` | `#header-time`        | Parsed → "@ 6pm ET" (strips minutes if :00)                    |
+| `row.date`             | `#header-date`        | Still populated for compatibility, but hidden in current layout |
+| `row.times_by_zone.ET` | `#header-time`        | Still populated for compatibility, but hidden in current layout |
 | `row.series_label`     | `#band-series-label`  | Sets text; adds `.visible` to `#band-series-row` if non-empty  |
-| `row.title`            | `#band-title`         | Strips `session_type:` prefix if `row.session_type` present    |
-| `row.partner`          | `#uoc-pill`           | Adds `.visible` to pill if non-empty                           |
-| `row.presenters[0]`    | `#presenter-name`     | Assembled: `field_taxo_title + first + last + name_suffix`     |
-| _(cleared)_            | `#presenter-cred`     | Always set to `''` — field unused by current API               |
-| `row.partner`          | `#presenter-role`     | Displays partner name in role slot (see §7, Known Quirks)      |
+| `row.indication` / variants | `.logo-left` / `.logo-right` | Matched against `/api/session-editor/indications`; uses `field_indication_logo.data` as a 24-hour local cache |
+| `row.title`            | `#band-title`         | Text is preserved; if the full title does not fit on one line, `Session Type:` becomes line one and the remaining title becomes line two |
+| `row.partner`          | `#uoc-pill`           | Adds `.visible` to the header partner logo if non-empty        |
+| `row.presenters[0]`    | `#presenter-name`     | Assembled: `title + first + last`                              |
+| `presenter.name_suffix`| `#presenter-cred`     | Displays credential/suffix under presenter name                |
+| `row.partner`          | `#presenter-role`     | Displays partner name in role/partner slot                     |
 | `row.date`             | `#date-pill-date`     | Raw string, no transform                                       |
 | `row.times_by_zone`    | `#tz-row`             | ET/CT/MT/PT joined with ` · `                                  |
 | `row.description`      | `#session-desc`       | HTML-stripped via temp `<div>.textContent`                     |
@@ -289,27 +317,23 @@ Expected shape from `GET /api/spotlight/microsite/session/search?q=`:
 
 ### `#presenter-role` displays `row.partner`
 
-The DOM element ID suggests it holds the presenter's role or job title. In practice it is populated with `row.partner` (the institutional partner name). The `presenter-cred` element is cleared to empty on every render. This is a naming mismatch that should be addressed if a presenter credential field is ever needed.
+The DOM element ID suggests it holds the presenter's role or job title. In practice it is populated with `row.partner` (the institutional partner name). The API does not currently expose a separate presenter job-title field.
 
-### `presenter-cred` is always cleared
+### Credential display uses `name_suffix`
 
-`document.getElementById('presenter-cred').textContent = ''` is hardcoded. There is no API field currently mapped to it. The element and CSS rule remain in place as structural debt.
-
-### No credential display in current API
-
-The presenter object has no `credentials` or `role` field in the current API response. If this is needed in future, it would need to be added to both the API endpoint and `populateCard()`.
+The current layout displays `presenter.name_suffix` in `#presenter-cred`. This works for suffix-style credentials such as `MD, FRCPC`, but it is not a dedicated `credentials` field.
 
 ### Single presenter only
 
 `(row.presenters || [])[0]` — only the first presenter is rendered. No layout exists for co-presenters.
 
-### Partner logo is hardcoded base64
+### Partner, foundation, OAV, STTT, and indication logos
 
-The right-side logo (`logo-right`) is embedded as base64. It does not change based on `row.partner`. The `uoc-pill` (which shows the partner logo inside the maroon band) is similarly a single hardcoded image. If multi-partner support is needed, both would need to become dynamic.
+The default header logos are embedded as base64. The partner logo shown in `#uoc-pill` is a single hardcoded image and does not change based on `row.partner`. `setLayout()` applies defaults, then the session indication is matched against `https://somebodytotalkto.com/api/session-editor/indications`. The matched `field_indication_logo.data` is cached in `localStorage` for 24 hours and used to replace `.logo-left` in Non Spotlight or `.logo-right` in Spotlight.
 
 ### File size
 
-At ~279 KB, the file is large for an HTML document. Approximately 270 KB is base64-encoded image data (two logos). This is intentional for portability but makes the file impractical to diff or code-review in a standard tool.
+At ~301 KB, the file is large for an HTML document. Most of that size is base64-encoded image data. This is intentional for portability but makes the file impractical to diff or code-review in a standard tool.
 
 ---
 
@@ -317,10 +341,10 @@ At ~279 KB, the file is large for an HTML document. Approximately 270 KB is base
 
 | Format | Size  | Pixel dimensions | Colour profile | Filename                 |
 |--------|-------|------------------|----------------|--------------------------|
-| PNG    | 4×6   | 1800 × 1200      | sRGB           | `facebook-promo-4x6.png` |
-| PNG    | 3×5   | 1500 × 900       | sRGB           | `facebook-promo-3x5.png` |
-| PDF    | 4×6   | 1800 × 1200 img  | landscape, 6×4in | `facebook-promo-4x6.pdf` |
-| PDF    | 3×5   | 1500 × 900 img   | landscape, 5×3in | `facebook-promo-3x5.pdf` |
+| PNG    | 4×6   | 1800 × 1200      | sRGB           | `facebook-promo-{layout}-4x6.png` |
+| PNG    | 3×5   | 1500 × 900       | sRGB           | `facebook-promo-{layout}-3x5.png` |
+| PDF    | 4×6   | 1800 × 1200 img  | landscape, 6×4in | `facebook-promo-{layout}-4x6.pdf` |
+| PDF    | 3×5   | 1500 × 900 img   | landscape, 5×3in | `facebook-promo-{layout}-3x5.pdf` |
 | Print  | both  | @page native      | exact colour   | _(browser print dialog)_ |
 
 The PDF is image-only (rasterised PNG embedded in a PDF wrapper). It is not a vector PDF. Text is not selectable in the output PDF.
