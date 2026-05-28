@@ -1153,7 +1153,7 @@ function populateCard(row) {
   presNameEl.innerHTML = escapeHtml(displayName);
 
   document.getElementById('presenter-cred').textContent = suffix;
-  document.getElementById('presenter-role').textContent = (row.partner || '').trim();
+  document.getElementById('presenter-role').textContent = '';
 
   // Date
   document.getElementById('date-pill-date').textContent = row.date || '';
