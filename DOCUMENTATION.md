@@ -245,7 +245,7 @@ Maps API response fields onto DOM elements. Detailed field-by-field mapping:
 | API Field              | DOM Element           | Transform applied                                              |
 |------------------------|-----------------------|----------------------------------------------------------------|
 | `row.date`             | `#header-date`        | Still populated for compatibility, but hidden in current layout |
-| `row.times_by_zone.ET` | `#header-time`        | Still populated for compatibility, but hidden in current layout |
+| `row.times_by_zone.CT` | `#header-time`        | Populates the classic Non Spotlight center header time; falls back to ET/time if CT is missing |
 | `row.series_label`     | `#band-series-label`  | Sets text; adds `.visible` to `#band-series-row` if non-empty  |
 | `row.indication` / variants | `.logo-left` / `.logo-right` | Matched against `/api/session-editor/indications`; uses `field_indication_logo.data` as a 24-hour local cache |
 | `row.title`            | `#band-title`         | Text is preserved; if the full title does not fit on one line, `Session Type:` becomes line one and the remaining title becomes line two |

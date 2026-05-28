@@ -1103,17 +1103,19 @@ function populateCard(row) {
       headerDateEl.textContent = '';
     }
 
-    // Format times_by_zone.ET → "@ 6pm ET"  (fallback: row.time)
-    const etRaw = ((row.times_by_zone && row.times_by_zone.ET) || row.time || '').trim();
-    if (etRaw) {
-      const m = etRaw.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)/i);
+    // Format times_by_zone.CT → "@ 5pm CT" for the classic center header.
+    const centerHeaderZone = row.times_by_zone || {};
+    const centerHeaderRaw = (centerHeaderZone.CT || centerHeaderZone.ET || row.time || '').trim();
+    const centerHeaderLabel = centerHeaderZone.CT ? 'CT' : (centerHeaderZone.ET || row.time ? 'ET' : '');
+    if (centerHeaderRaw) {
+      const m = centerHeaderRaw.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)/i);
       if (m) {
         const h    = parseInt(m[1], 10);
         const mins = (m[2] && m[2] !== '00') ? ':' + m[2] : '';
         const ampm = m[3].toLowerCase();
-        headerTimeEl.textContent = '@ ' + h + mins + ampm + ' ET';
+        headerTimeEl.textContent = '@ ' + h + mins + ampm + (centerHeaderLabel ? ' ' + centerHeaderLabel : '');
       } else {
-        headerTimeEl.textContent = '@ ' + etRaw;
+        headerTimeEl.textContent = '@ ' + centerHeaderRaw + (centerHeaderLabel && !new RegExp('\\b' + centerHeaderLabel + '\\b', 'i').test(centerHeaderRaw) ? ' ' + centerHeaderLabel : '');
       }
     } else {
       headerTimeEl.textContent = '';
