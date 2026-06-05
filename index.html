@@ -735,10 +735,41 @@ body {
   min-width: 0;
 }
 .session-promo-presenter-name {
+  align-items: center;
+  display: flex;
+  gap: 5px;
+  line-height: 1.15;
+  max-width: 100%;
+  min-width: 0;
+}
+.session-promo-presenter-label {
+  align-items: center;
+  background: var(--bg-rose);
+  border: 1px solid var(--border-rose);
+  border-radius: 999px;
+  color: var(--maroon);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 10px;
+  font-weight: 700;
+  gap: 4px;
+  padding: 5px 9px;
+}
+.session-promo-presenter-label svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  stroke-width: 2.1;
+}
+.session-promo-presenter-name-value {
   color: #111;
-  font-size: 15px;
-  font-weight: 900;
-  line-height: 1.2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 700;
 }
 .session-promo-presenter-detail {
   color: #555;
@@ -1077,7 +1108,7 @@ body {
       <select id="session-card-type" aria-label="Card type">
         <option value="foundation">Medical Amyloidosis Session - Spotlight</option>
         <option value="classic">Medical Amyloidosis Session - Non Spotlight</option>
-        <option value="session-front">Session Registration Promo Card</option>
+        <option value="session-front" selected>Session Registration Promo Card</option>
       </select>
     </label>
     <label class="field-control" for="timezone-select">
@@ -1248,7 +1279,19 @@ body {
               <div class="session-promo-headshot-fallback" id="session-promo-headshot-fallback">No<br>photo</div>
             </div>
             <div class="session-promo-presenter-copy">
-              <div class="session-promo-presenter-name" id="session-promo-presenter-name">Presenter</div>
+              <div class="session-promo-presenter-name">
+                <span class="session-promo-presenter-label">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 3v10"></path>
+                    <path d="M8 7v5a4 4 0 0 0 8 0V7"></path>
+                    <path d="M5 11v1a7 7 0 0 0 14 0v-1"></path>
+                    <path d="M12 19v2"></path>
+                    <path d="M9 21h6"></path>
+                  </svg>
+                  Featuring
+                </span>
+                <span class="session-promo-presenter-name-value" id="session-promo-presenter-name">Presenter</span>
+              </div>
               <div class="session-promo-presenter-detail" id="session-promo-presenter-detail"></div>
             </div>
           </div>
@@ -1913,7 +1956,7 @@ function setLayout(layout) {
   updateSizeLabel();
   fitBandTitle();
 }
-setLayout('foundation');
+setLayout('session-front');
 syncBackLogos();
 loadPartnerConfigs();
 
