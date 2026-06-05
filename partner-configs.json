@@ -1,0 +1,35 @@
+{
+  "defaultPartner": "uoc",
+  "partners": {
+    "uoc": {
+      "label": "University of Chicago",
+      "exportSlug": "uoc",
+      "partnerLogo": "__embedded_uoc_logo__",
+      "partnerLogoAlt": "University of Chicago Medicine",
+      "defaultTimezone": "CT",
+      "colors": {
+        "primary": "#8B1F2D",
+        "primaryDark": "#6E1A24",
+        "accent": "#FFE8A3",
+        "borderAccent": "#DDD0D2",
+        "softBg": "#f5eaec",
+        "sessionBandBg": "#8B1F2D"
+      }
+    },
+    "coh": {
+      "label": "City of Hope",
+      "exportSlug": "coh",
+      "partnerLogo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='330' height='70' viewBox='0 0 330 70'%3E%3Crect width='330' height='70' fill='white'/%3E%3Crect x='4' y='7' width='52' height='52' fill='%23005DAA'/%3E%3Cpath d='M30 17v31M19 28h22M22 20l16 26M38 20L22 46' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ctext x='68' y='44' font-family='Arial,Helvetica,sans-serif' font-size='32' fill='%23666666'%3ECity of Hope.%3C/text%3E%3C/svg%3E",
+      "partnerLogoAlt": "City of Hope",
+      "defaultTimezone": "PT",
+      "colors": {
+        "primary": "#006E8E",
+        "primaryDark": "#004F66",
+        "accent": "#FFE8A3",
+        "borderAccent": "#B9DEE6",
+        "softBg": "#E7F5F8",
+        "sessionBandBg": "linear-gradient(135deg, #006E8E 0%, #004F66 74%, #F58220 160%)"
+      }
+    }
+  }
+}

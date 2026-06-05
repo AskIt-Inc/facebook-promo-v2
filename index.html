@@ -23,6 +23,7 @@
   --border:      #E8E8E8;
   --border-rose: #DDD0D2;
   --bg-rose:     #f5eaec;
+  --session-band-bg: var(--maroon);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -173,7 +174,7 @@ body {
    Full width; partner logo is in the header.
    ══════════════════════════════════════════════════ */
 .session-band {
-  background: var(--maroon);
+  background: var(--session-band-bg);
   padding: 9px 22px 10px;
   display: flex;
   align-items: center;
@@ -512,7 +513,7 @@ body {
   font-family: monospace;
 }
 .program-back-band {
-  background: var(--maroon);
+  background: var(--session-band-bg);
   color: #fff;
   padding: 10px 20px 12px;
   flex-shrink: 0;
@@ -640,7 +641,7 @@ body {
 }
 .session-promo-kicker {
   height: 30px;
-  background: var(--maroon);
+  background: var(--session-band-bg);
   color: var(--gold);
   display: flex;
   align-items: center;
@@ -979,18 +980,50 @@ body {
   margin: 0; text-transform: uppercase; letter-spacing: 0.08em;
 }
 .search-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.search-config-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(170px, 1.25fr) minmax(145px, 1fr);
+  align-items: stretch;
+}
+.search-action-row { width: 100%; }
+.search-input-row {
+  display: block;
+  width: 100%;
+}
+.field-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.field-control span {
+  color: #555;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
 .search-row input[type="text"] {
-  flex: 1 1 220px; padding: 7px 12px; font-size: 13px;
+  flex: 1 1 100%; padding: 7px 12px; font-size: 13px;
   border: 1px solid #ccc; border-radius: 4px;
   outline: none; font-family: inherit;
 }
 .search-row select {
-  flex: 0 1 280px; padding: 7px 10px; font-size: 12px;
+  flex: 1 1 0; min-width: 180px; padding: 7px 10px; font-size: 12px;
   border: 1px solid #ccc; border-radius: 4px;
   outline: none; font-family: inherit;
   background: #fff; color: #333;
 }
-#timezone-select { flex-basis: 260px; }
+#session-card-type { flex-grow: 1.25; }
+#timezone-select { flex-grow: 0.9; }
+.search-config-row select,
+.search-input-row .field-control,
+.search-input-row input[type="text"] {
+  flex: 1 1 100%;
+  min-width: 0;
+  width: 100%;
+}
 .search-row input[type="text"]:focus,
 .search-row select:focus {
   border-color: var(--maroon);
@@ -1015,7 +1048,7 @@ body {
   border-radius: 4px; cursor: pointer; font-size: 12px;
   line-height: 1.4; background: #fafafa; transition: background 0.12s;
 }
-.search-result-item:hover { background: #f5eaec; border-color: var(--border-rose); }
+.search-result-item:hover { background: var(--bg-rose); border-color: var(--border-rose); }
 .search-result-item strong { display: block; color: #111; font-size: 12.5px; }
 .search-result-item span   { color: #777; font-size: 11px; }
 .search-status { font-size: 11.5px; color: #888; font-style: italic; min-height: 18px; }
@@ -1030,23 +1063,43 @@ body {
 
 <!-- SEARCH PANEL -->
 <div class="search-panel" id="search-panel">
-  <h3>Load Session</h3>
-  <div class="search-row">
-    <input type="text" id="session-search-input" placeholder="Type session title keyword…" autocomplete="off">
-    <select id="session-card-type" aria-label="Card type">
-      <option value="foundation">Medical Amyloidosis Session - Spotlight</option>
-      <option value="classic">Medical Amyloidosis Session - Non Spotlight</option>
-      <option value="session-front">Session Registration Promo Card</option>
-    </select>
-    <select id="timezone-select" aria-label="Front card time zone">
-      <option value="ET">Eastern Time - New York</option>
-      <option value="CT">Central Time - Chicago</option>
-      <option value="MT">Mountain Time - Denver</option>
-      <option value="AZ">Arizona Time - Phoenix</option>
-      <option value="PT">Pacific Time - Los Angeles</option>
-      <option value="AK">Alaska Time - Anchorage</option>
-      <option value="HT">Hawaii Time - Honolulu</option>
-    </select>
+  <h3>Generate Promo Cards</h3>
+  <div class="search-row search-config-row">
+    <label class="field-control" for="partner-select">
+      <span>Partner</span>
+      <select id="partner-select" aria-label="Partner">
+        <option value="uoc">University of Chicago</option>
+        <option value="coh">City of Hope</option>
+      </select>
+    </label>
+    <label class="field-control" for="session-card-type">
+      <span>Card Promo</span>
+      <select id="session-card-type" aria-label="Card type">
+        <option value="foundation">Medical Amyloidosis Session - Spotlight</option>
+        <option value="classic">Medical Amyloidosis Session - Non Spotlight</option>
+        <option value="session-front">Session Registration Promo Card</option>
+      </select>
+    </label>
+    <label class="field-control" for="timezone-select">
+      <span>Time Zone</span>
+      <select id="timezone-select" aria-label="Front card time zone">
+        <option value="ET">Eastern Time - New York</option>
+        <option value="CT">Central Time - Chicago</option>
+        <option value="MT">Mountain Time - Denver</option>
+        <option value="AZ">Arizona Time - Phoenix</option>
+        <option value="PT">Pacific Time - Los Angeles</option>
+        <option value="AK">Alaska Time - Anchorage</option>
+        <option value="HT">Hawaii Time - Honolulu</option>
+      </select>
+    </label>
+  </div>
+  <div class="search-row search-input-row">
+    <label class="field-control" for="session-search-input">
+      <span>Session Search</span>
+      <input type="text" id="session-search-input" placeholder="Type session title keyword…" autocomplete="off">
+    </label>
+  </div>
+  <div class="search-row search-action-row">
     <button class="btn-search" id="btn-search">Search</button>
     <button class="btn-clear" id="btn-clear" type="button">Clear</button>
   </div>
@@ -1309,6 +1362,7 @@ const sessionBand = document.querySelector('.session-band');
 const bandLeft = document.querySelector('.band-left');
 const headerPartnerLogo = document.getElementById('uoc-pill');
 const uocLogoImg = headerPartnerLogo ? headerPartnerLogo.querySelector('img') : null;
+const partnerSelect = document.getElementById('partner-select');
 const cardTypeSelect = document.getElementById('session-card-type');
 const timezoneSelect = document.getElementById('timezone-select');
 const leftLogo = document.querySelector('.logo-left');
@@ -1319,6 +1373,45 @@ const oavLogoSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAooAAADiCAYAAA
 
 let currentSide = 'front';
 let currentSessionRow = null;
+const PARTNER_STORAGE_KEY = 'facebook_promo_partner';
+const PARTNER_CONFIG_FALLBACK = {
+  defaultPartner: 'uoc',
+  partners: {
+    uoc: {
+      label: 'University of Chicago',
+      exportSlug: 'uoc',
+      partnerLogo: '__embedded_uoc_logo__',
+      partnerLogoAlt: 'University of Chicago Medicine',
+      defaultTimezone: 'CT',
+      colors: {
+        primary: '#8B1F2D',
+        primaryDark: '#6E1A24',
+        accent: '#FFE8A3',
+        borderAccent: '#DDD0D2',
+        softBg: '#f5eaec',
+        sessionBandBg: '#8B1F2D'
+      }
+    },
+    coh: {
+      label: 'City of Hope',
+      exportSlug: 'coh',
+      partnerLogo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='330' height='70' viewBox='0 0 330 70'%3E%3Crect width='330' height='70' fill='white'/%3E%3Crect x='4' y='7' width='52' height='52' fill='%23005DAA'/%3E%3Cpath d='M30 17v31M19 28h22M22 20l16 26M38 20L22 46' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ctext x='68' y='44' font-family='Arial,Helvetica,sans-serif' font-size='32' fill='%23666666'%3ECity of Hope.%3C/text%3E%3C/svg%3E",
+      partnerLogoAlt: 'City of Hope',
+      defaultTimezone: 'PT',
+      colors: {
+        primary: '#006E8E',
+        primaryDark: '#004F66',
+        accent: '#FFE8A3',
+        borderAccent: '#B9DEE6',
+        softBg: '#E7F5F8',
+        sessionBandBg: 'linear-gradient(135deg, #006E8E 0%, #004F66 74%, #F58220 160%)'
+      }
+    }
+  }
+};
+let partnerConfigs = PARTNER_CONFIG_FALLBACK;
+let activePartnerKey = loadSelectedPartnerKey();
+let activePartnerConfig = PARTNER_CONFIG_FALLBACK.partners[activePartnerKey] || PARTNER_CONFIG_FALLBACK.partners.uoc;
 const TIMEZONE_STORAGE_KEY = 'facebook_promo_card_timezone';
 const TIMEZONE_OPTIONS = {
   ET: { short: 'ET', iana: 'America/New_York', apiKey: 'ET' },
@@ -1332,24 +1425,96 @@ const TIMEZONE_OPTIONS = {
 const VALID_TIMEZONES = Object.keys(TIMEZONE_OPTIONS);
 let selectedTimezone = loadSelectedTimezone();
 
+function normalizePartnerConfig(config) {
+  const merged = config && config.partners ? config : PARTNER_CONFIG_FALLBACK;
+  for (const key of Object.keys(merged.partners || {})) {
+    if (merged.partners[key].partnerLogo === '__embedded_uoc_logo__') {
+      merged.partners[key].partnerLogo = uocLogoImg ? uocLogoImg.src : defaultLeftLogoSrc;
+    }
+  }
+  return merged;
+}
+
+function loadSelectedPartnerKey() {
+  try {
+    const stored = window.localStorage.getItem(PARTNER_STORAGE_KEY);
+    return stored || PARTNER_CONFIG_FALLBACK.defaultPartner;
+  } catch(e) {
+    return PARTNER_CONFIG_FALLBACK.defaultPartner;
+  }
+}
+
+function getPartnerConfig(key = activePartnerKey) {
+  return (partnerConfigs.partners && partnerConfigs.partners[key])
+    || partnerConfigs.partners[partnerConfigs.defaultPartner]
+    || PARTNER_CONFIG_FALLBACK.partners.uoc;
+}
+
+function getPartnerTimezoneStorageKey(key = activePartnerKey) {
+  return TIMEZONE_STORAGE_KEY + '_' + key;
+}
+
+function applyPartnerTheme() {
+  activePartnerConfig = getPartnerConfig();
+  const colors = activePartnerConfig.colors || {};
+  const root = document.documentElement;
+  root.style.setProperty('--maroon', colors.primary || '#8B1F2D');
+  root.style.setProperty('--maroon-dark', colors.primaryDark || '#6E1A24');
+  root.style.setProperty('--gold', colors.accent || '#FFE8A3');
+  root.style.setProperty('--border-rose', colors.borderAccent || '#DDD0D2');
+  root.style.setProperty('--bg-rose', colors.softBg || '#f5eaec');
+  root.style.setProperty('--session-band-bg', colors.sessionBandBg || colors.primary || '#8B1F2D');
+
+  if (uocLogoImg && activePartnerConfig.partnerLogo) {
+    uocLogoImg.src = activePartnerConfig.partnerLogo;
+    uocLogoImg.alt = activePartnerConfig.partnerLogoAlt || activePartnerConfig.label || 'Partner logo';
+  }
+  document.body.dataset.partner = activePartnerKey;
+  updateHeaderLogos();
+  syncBackLogos();
+  syncSessionPromoLogos();
+  updateSizeLabel();
+}
+
+async function loadPartnerConfigs() {
+  try {
+    const response = await fetch('partner-configs.json', { cache: 'no-store' });
+    if (response.ok) {
+      partnerConfigs = normalizePartnerConfig(await response.json());
+    } else {
+      partnerConfigs = normalizePartnerConfig(PARTNER_CONFIG_FALLBACK);
+    }
+  } catch(e) {
+    partnerConfigs = normalizePartnerConfig(PARTNER_CONFIG_FALLBACK);
+  }
+
+  if (!partnerConfigs.partners[activePartnerKey]) {
+    activePartnerKey = partnerConfigs.defaultPartner || 'uoc';
+  }
+  if (partnerSelect) partnerSelect.value = activePartnerKey;
+  selectedTimezone = loadSelectedTimezone();
+  if (timezoneSelect) timezoneSelect.value = selectedTimezone;
+  applyPartnerTheme();
+}
+
 function isSessionFrontLayout() {
   return surface.classList.contains('layout-session-front');
 }
 
 function loadSelectedTimezone() {
   try {
-    const stored = window.localStorage.getItem(TIMEZONE_STORAGE_KEY);
-    return VALID_TIMEZONES.includes(stored) ? stored : 'ET';
+    const stored = window.localStorage.getItem(getPartnerTimezoneStorageKey());
+    return VALID_TIMEZONES.includes(stored) ? stored : (activePartnerConfig.defaultTimezone || 'ET');
   } catch(e) {
-    return 'ET';
+    return activePartnerConfig.defaultTimezone || 'ET';
   }
 }
 
 function saveSelectedTimezone(zone) {
-  selectedTimezone = VALID_TIMEZONES.includes(zone) ? zone : 'ET';
+  selectedTimezone = VALID_TIMEZONES.includes(zone) ? zone : (activePartnerConfig.defaultTimezone || 'ET');
   if (timezoneSelect) timezoneSelect.value = selectedTimezone;
   try {
-    window.localStorage.setItem(TIMEZONE_STORAGE_KEY, selectedTimezone);
+    window.localStorage.setItem(getPartnerTimezoneStorageKey(), selectedTimezone);
   } catch(e) {
     // Local storage can fail in private browsing; the in-memory selection still works.
   }
@@ -1463,7 +1628,10 @@ function syncBackLogos() {
   const backLeft = document.getElementById('back-logo-left');
   const backMid = document.getElementById('back-logo-mid');
   const backRight = document.getElementById('back-logo-right');
-  if (backLeft) backLeft.src = defaultLeftLogoSrc;
+  if (backLeft) {
+    backLeft.src = activePartnerConfig.partnerLogo || defaultLeftLogoSrc;
+    backLeft.alt = activePartnerConfig.partnerLogoAlt || activePartnerConfig.label || 'Partner logo';
+  }
   if (backMid) backMid.src = oavLogoSrc;
   if (backRight) backRight.src = stttLogoSrc;
 }
@@ -1475,10 +1643,11 @@ function syncSessionPromoLogos() {
   const backUoc = document.getElementById('session-back-uoc-logo');
   const backOav = document.getElementById('session-back-oav-logo');
   const backSttt = document.getElementById('session-back-sttt-logo');
-  const partnerSrc = uocLogoImg ? uocLogoImg.src : defaultLeftLogoSrc;
+  const partnerSrc = activePartnerConfig.partnerLogo || (uocLogoImg ? uocLogoImg.src : defaultLeftLogoSrc);
+  const partnerAlt = activePartnerConfig.partnerLogoAlt || activePartnerConfig.label || 'Partner logo';
   if (promoUoc) {
     promoUoc.src = partnerSrc;
-    promoUoc.alt = 'University of Chicago Medicine';
+    promoUoc.alt = partnerAlt;
   }
   if (promoOav) {
     promoOav.src = oavLogoSrc;
@@ -1490,7 +1659,7 @@ function syncSessionPromoLogos() {
   }
   if (backUoc) {
     backUoc.src = partnerSrc;
-    backUoc.alt = 'University of Chicago Medicine';
+    backUoc.alt = partnerAlt;
   }
   if (backOav) {
     backOav.src = oavLogoSrc;
@@ -1516,6 +1685,10 @@ function updateSizeLabel() {
 function getLayoutTag() {
   if (isSessionFrontLayout()) return 'session-registration';
   return surface.classList.contains('layout-classic') ? 'classic' : '3-logo';
+}
+
+function getExportPartnerSlug() {
+  return activePartnerConfig.exportSlug || activePartnerKey || 'partner';
 }
 
 function setSide(side) {
@@ -1547,6 +1720,24 @@ if (timezoneSelect) {
   timezoneSelect.addEventListener('change', () => {
     saveSelectedTimezone(timezoneSelect.value);
     updateSelectedTimezoneDisplay();
+  });
+}
+
+if (partnerSelect) {
+  partnerSelect.value = activePartnerKey;
+  partnerSelect.addEventListener('change', () => {
+    activePartnerKey = partnerSelect.value;
+    activePartnerConfig = getPartnerConfig();
+    try {
+      window.localStorage.setItem(PARTNER_STORAGE_KEY, activePartnerKey);
+    } catch(e) {
+      // Local storage can fail in private browsing; the in-memory selection still works.
+    }
+    selectedTimezone = loadSelectedTimezone();
+    saveSelectedTimezone(selectedTimezone);
+    applyPartnerTheme();
+    updateSelectedTimezoneDisplay();
+    resetSearchState('Partner changed. Enter text in the search box to load a session.');
   });
 }
 
@@ -1724,6 +1915,7 @@ function setLayout(layout) {
 }
 setLayout('foundation');
 syncBackLogos();
+loadPartnerConfigs();
 
 function setSize(s) {
   if (isSessionFrontLayout() && s === '3x5') {
@@ -1812,7 +2004,7 @@ async function downloadPNG() {
   try {
     const dataUrl = await captureCard(scale, cfg.pxW, cfg.pxH);
     const a = document.createElement('a');
-    a.download = `facebook-promo-${getLayoutTag()}-${currentSide}-${cfg.tag}.png`;
+    a.download = `facebook-promo-${getExportPartnerSlug()}-${getLayoutTag()}-${currentSide}-${cfg.tag}.png`;
     a.href = dataUrl; a.click();
   } catch(e) { alert('PNG export failed: ' + e.message); }
   finally { btn.textContent = '↓ PNG'; btn.disabled = false; }
@@ -1832,7 +2024,7 @@ async function downloadPDF() {
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: 'landscape', unit: 'in', format: [cfg.wIn, cfg.hIn] });
     pdf.addImage(dataUrl, 'PNG', 0, 0, cfg.wIn, cfg.hIn);
-    pdf.save(`facebook-promo-${getLayoutTag()}-${currentSide}-${cfg.tag}.pdf`);
+    pdf.save(`facebook-promo-${getExportPartnerSlug()}-${getLayoutTag()}-${currentSide}-${cfg.tag}.pdf`);
   } catch(e) { alert('PDF export failed: ' + e.message); }
   finally { btn.textContent = '↓ PDF'; btn.disabled = false; }
 }
@@ -2149,9 +2341,9 @@ function populateCard(row) {
   // Title — one line if it fits; otherwise session type + title on two lines.
   renderBandTitle(row.title || '');
 
-  // Partner logo — only shown when partner is set
+  // Partner logo follows the selected partner, even when the API row has no partner field.
   const uocPill = document.getElementById('uoc-pill');
-  if ((row.partner || '').trim()) {
+  if (activePartnerConfig.partnerLogo) {
     uocPill.classList.add('visible');
   } else {
     uocPill.classList.remove('visible');
