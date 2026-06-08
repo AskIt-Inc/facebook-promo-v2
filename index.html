@@ -196,14 +196,15 @@ body {
   margin-right: 5px;
 }
 .band-series-label {
-  font-size: 14px; font-weight: 700;
+  font-size: 18px;
+  font-weight: 700;
   font-style: italic;
   color: var(--gold);
   line-height: 1.2;
   display: inline-block;
 }
 
-/* Title — stays one line when it fits; otherwise splits at the first colon. */
+/* Title stays one line when it fits; otherwise splits into prefix/suffix lines. */
 .band-title {
   font-size: 17px; font-weight: 700;
   color: #fff; line-height: 1.25;
@@ -355,7 +356,7 @@ body {
   white-space: nowrap;
 }
 .session-desc {
-  font-size: 10.7px; color: #1a1a1a; line-height: 1.55;
+  font-size: 13.7px; color: #1a1a1a; line-height: 1.55;
 }
 .register-row {
   display: flex; align-items: center;
@@ -408,21 +409,34 @@ body {
   align-self: start; justify-self: center;
 }
 .qr-box {
-  width: 82px; height: 82px;
+  width: 117px;
+  height: 119px;
   border: 2px solid var(--border-rose);
-  border-radius: 6px; background: #fff;
-  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
-.qr-box img { width: 78px; height: 78px; display: none; border-radius: 4px; }
+.qr-box img {
+  width: 111px;
+  height: 116px;
+  display: none;
+  border-radius: 4px;
+}
 .qr-placeholder {
   font-size: 8px; color: #bbb; text-align: center;
   padding: 6px; line-height: 1.4;
 }
 .qr-label {
-  font-size: 8px; color: var(--maroon);
-  text-transform: uppercase; letter-spacing: 0.1em;
-  text-align: center; line-height: 1.4; font-weight: 700;
+  font-size: 12px;
+  color: var(--maroon);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  line-height: 1.4;
+  font-weight: 700;
 }
 
 /* ══════════════════════════════════════════════════
@@ -852,6 +866,124 @@ body {
   background: #fff;
   color: #171717;
 }
+.session-back-top {
+  height: 48px;
+  padding: 6px 18px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 110px 1fr 96px;
+  align-items: center;
+  column-gap: 10px;
+  flex-shrink: 0;
+}
+.session-back-top .logo-divider {
+  display: none;
+}
+.session-back-top-logo {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+}
+.session-back-top-logo--sttt {
+  justify-self: start;
+  max-width: 110px;
+}
+.session-back-top-logo--oav {
+  justify-self: end;
+  max-width: 96px;
+}
+.session-back-top-title {
+  border-left: 1px solid var(--border-rose);
+  border-right: 1px solid var(--border-rose);
+  color: var(--maroon);
+  font-size: 12.5px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  padding: 0 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+.session-back-top-title strong {
+  color: #0d0d0d;
+  font-weight: 900;
+}
+.session-back-feature-band {
+  background: linear-gradient(135deg, var(--maroon-dark) 0%, var(--maroon) 100%);
+  color: #fff;
+  min-height: 92px;
+  padding: 14px 22px;
+  display: grid;
+  grid-template-columns: 1fr 184px;
+  column-gap: 22px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.session-back-feature-copy {
+  min-width: 0;
+}
+.session-back-feature-eyebrow {
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.session-back-feature-eyebrow svg {
+  width: 11px;
+  height: 11px;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+.session-back-feature-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+.session-back-feature-rule {
+  width: 22px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 99px;
+  margin: 10px 0 8px;
+}
+.session-back-feature-program {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+.session-back-feature-logos {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.session-back-feature-logo-card {
+  background: #fff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 10px;
+  width: 100%;
+}
+.session-back-feature-logo-card img {
+  display: block;
+  height: 23px;
+  max-width: 160px;
+  object-fit: contain;
+  width: auto;
+}
 .session-back-hero {
   flex: 1;
   display: grid;
@@ -877,7 +1009,7 @@ body {
 }
 .session-back-title {
   color: var(--maroon);
-  font-size: 22px;
+  font-size: 19px;
   line-height: 1.08;
   font-weight: 800;
   letter-spacing: 0;
@@ -1013,7 +1145,7 @@ body {
 .search-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .search-config-row {
   display: grid;
-  grid-template-columns: minmax(120px, 1fr) minmax(170px, 1.25fr) minmax(145px, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
   align-items: stretch;
 }
 .search-action-row { width: 100%; }
@@ -1123,6 +1255,52 @@ body {
         <option value="HT">Hawaii Time - Honolulu</option>
       </select>
     </label>
+    <label class="field-control" for="session-title-font-size">
+      <span>Title Font Size</span>
+      <select id="session-title-font-size" aria-label="Session title font size">
+        <option value="10">10px</option>
+        <option value="10.5">10.5px</option>
+        <option value="11">11px</option>
+        <option value="11.5">11.5px</option>
+        <option value="12">12px</option>
+        <option value="12.5">12.5px</option>
+        <option value="13">13px</option>
+        <option value="13.5">13.5px</option>
+        <option value="14">14px</option>
+        <option value="14.5">14.5px</option>
+        <option value="15">15px</option>
+        <option value="15.5">15.5px</option>
+        <option value="16">16px</option>
+        <option value="16.5">16.5px</option>
+        <option value="17" selected>17px (Default)</option>
+        <option value="17.5">17.5px</option>
+        <option value="18">18px</option>
+        <option value="18.5">18.5px</option>
+        <option value="19">19px</option>
+        <option value="19.5">19.5px</option>
+        <option value="20">20px</option>
+      </select>
+    </label>
+    <label class="field-control" for="session-desc-font-size">
+      <span>Description Font Size</span>
+      <select id="session-desc-font-size" aria-label="Session description font size">
+        <option value="10">10px</option>
+        <option value="10.5">10.5px</option>
+        <option value="11">11px</option>
+        <option value="11.5">11.5px</option>
+        <option value="12">12px</option>
+        <option value="12.5">12.5px</option>
+        <option value="13">13px</option>
+        <option value="13.5">13.5px</option>
+        <option value="13.7" selected>13.7px (Default)</option>
+        <option value="14">14px</option>
+        <option value="14.5">14.5px</option>
+        <option value="15">15px</option>
+        <option value="15.5">15.5px</option>
+        <option value="16">16px</option>
+        <option value="16.5">16.5px</option>
+      </select>
+    </label>
   </div>
   <div class="search-row search-input-row">
     <label class="field-control" for="session-search-input">
@@ -1207,6 +1385,16 @@ body {
           <img id="headshot-img" src="" alt="Presenter headshot">
           <div class="headshot-fallback" id="headshot-fallback">Photo<br>loading…</div>
         </div>
+        <span class="session-promo-presenter-label">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3v10"></path>
+            <path d="M8 7v5a4 4 0 0 0 8 0V7"></path>
+            <path d="M5 11v1a7 7 0 0 0 14 0v-1"></path>
+            <path d="M12 19v2"></path>
+            <path d="M9 21h6"></path>
+          </svg>
+          Featuring
+        </span>
         <div class="presenter-name" id="presenter-name"></div>
         <div class="presenter-cred" id="presenter-cred"></div>
         <div class="presenter-role" id="presenter-role"></div>
@@ -1248,7 +1436,7 @@ body {
 
     <!-- ZONE 4: FINE PRINT -->
     <div class="fine-print front-side">
-      Subscribing is free and your information will not be shared with third parties.
+      Registering is free and your information will not be shared with third parties.
     </div>
 
     <section class="session-front-side session-promo-card" aria-label="Session registration promo card">
@@ -1310,15 +1498,41 @@ body {
     </section>
 
     <section class="session-back-side session-back-card" aria-label="June Spotlight microsite promo card back">
-      <div class="session-promo-top">
-        <img id="session-back-uoc-logo" class="session-promo-logo--uoc" src="" alt="Amyloidosis Foundation">
-        <div class="logo-divider"></div>
-        <img id="session-back-oav-logo" class="session-promo-logo--oav" src="" alt="oneAMYLOIDOSISvoice">
-        <div class="logo-divider"></div>
-        <img id="session-back-sttt-logo" class="session-promo-logo--sttt" src="" alt="Somebody To Talk To">
+      <div class="session-back-top">
+        <img id="session-back-sttt-logo" class="session-back-top-logo session-back-top-logo--sttt" src="" alt="Somebody To Talk To">
+        <div class="session-back-top-title">Amyloidosis Program Spotlight Series &bull; <strong>June 2026</strong></div>
+        <img id="session-back-oav-logo" class="session-back-top-logo session-back-top-logo--oav" src="" alt="oneAMYLOIDOSISvoice">
       </div>
 
-      <div class="session-promo-kicker">June Spotlight Series</div>
+      <div class="session-back-feature-band">
+        <div class="session-back-feature-copy">
+          <div class="session-back-feature-eyebrow">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v3"></path>
+              <path d="M12 18v3"></path>
+              <path d="M4.2 7.5l2.6 1.5"></path>
+              <path d="M17.2 15l2.6 1.5"></path>
+              <path d="M19.8 7.5 17.2 9"></path>
+              <path d="M6.8 15l-2.6 1.5"></path>
+              <path d="M9 14h6"></path>
+              <path d="M8 18h8"></path>
+              <path d="M9 14a5 5 0 1 1 6 0"></path>
+            </svg>
+            Featuring
+          </div>
+          <div class="session-back-feature-title">University of Chicago &amp; Endeavor Health</div>
+          <div class="session-back-feature-rule"></div>
+          <div class="session-back-feature-program">Amyloidosis Program</div>
+        </div>
+        <div class="session-back-feature-logos">
+          <div class="session-back-feature-logo-card">
+            <img src="https://edge.sitecorecloud.io/unichicagomc-81nbqnb3/media/images/ucmc/landing-pages/ucm-logo-horizontal.png" alt="UChicago Medicine">
+          </div>
+          <div class="session-back-feature-logo-card">
+            <img src="http://127.0.0.1:5173/endeavor-logo.png" alt="Endeavor Health">
+          </div>
+        </div>
+      </div>
 
       <div class="session-back-hero">
         <div class="session-back-copy">
@@ -1403,6 +1617,8 @@ const uocLogoImg = headerPartnerLogo ? headerPartnerLogo.querySelector('img') : 
 const partnerSelect = document.getElementById('partner-select');
 const cardTypeSelect = document.getElementById('session-card-type');
 const timezoneSelect = document.getElementById('timezone-select');
+const titleFontSelect = document.getElementById('session-title-font-size');
+const descFontSelect = document.getElementById('session-desc-font-size');
 const leftLogo = document.querySelector('.logo-left');
 const rightLogo = document.querySelector('.logo-right');
 const defaultLeftLogoSrc = leftLogo ? leftLogo.src : '';
@@ -1462,6 +1678,12 @@ const TIMEZONE_OPTIONS = {
 };
 const VALID_TIMEZONES = Object.keys(TIMEZONE_OPTIONS);
 let selectedTimezone = loadSelectedTimezone();
+const TITLE_FONT_STORAGE_KEY = 'facebook_promo_title_font_size';
+const DESC_FONT_STORAGE_KEY = 'facebook_promo_desc_font_size';
+const DEFAULT_TITLE_FONT_SIZE = '17';
+const DEFAULT_DESC_FONT_SIZE = '13.7';
+let selectedTitleFontSize = loadFontSize(TITLE_FONT_STORAGE_KEY, DEFAULT_TITLE_FONT_SIZE);
+let selectedDescFontSize = loadFontSize(DESC_FONT_STORAGE_KEY, DEFAULT_DESC_FONT_SIZE);
 
 function normalizePartnerConfig(config) {
   const merged = config && config.partners ? config : PARTNER_CONFIG_FALLBACK;
@@ -1556,6 +1778,30 @@ function saveSelectedTimezone(zone) {
   } catch(e) {
     // Local storage can fail in private browsing; the in-memory selection still works.
   }
+}
+
+function loadFontSize(storageKey, defaultSize) {
+  try {
+    const stored = window.localStorage.getItem(storageKey);
+    return stored && !Number.isNaN(Number(stored)) ? stored : defaultSize;
+  } catch(e) {
+    return defaultSize;
+  }
+}
+
+function saveFontSize(storageKey, value, defaultSize) {
+  const normalized = value && !Number.isNaN(Number(value)) ? String(value) : defaultSize;
+  try {
+    window.localStorage.setItem(storageKey, normalized);
+  } catch(e) {
+    // Keep the in-memory selection even if browser storage is unavailable.
+  }
+  return normalized;
+}
+
+function applyDescriptionFontSize() {
+  const descEl = document.getElementById('session-desc');
+  if (descEl) descEl.style.fontSize = selectedDescFontSize + 'px';
 }
 
 function cleanTimeValue(value) {
@@ -1678,7 +1924,6 @@ function syncSessionPromoLogos() {
   const promoUoc = document.getElementById('session-promo-uoc-logo');
   const promoOav = document.getElementById('session-promo-oav-logo');
   const promoSttt = document.getElementById('session-promo-sttt-logo');
-  const backUoc = document.getElementById('session-back-uoc-logo');
   const backOav = document.getElementById('session-back-oav-logo');
   const backSttt = document.getElementById('session-back-sttt-logo');
   const partnerSrc = activePartnerConfig.partnerLogo || (uocLogoImg ? uocLogoImg.src : defaultLeftLogoSrc);
@@ -1694,10 +1939,6 @@ function syncSessionPromoLogos() {
   if (promoSttt) {
     promoSttt.src = stttLogoSrc;
     promoSttt.alt = 'Somebody To Talk To';
-  }
-  if (backUoc) {
-    backUoc.src = defaultLeftLogoSrc;
-    backUoc.alt = 'Amyloidosis Foundation';
   }
   if (backOav) {
     backOav.src = oavLogoSrc;
@@ -1758,6 +1999,22 @@ if (timezoneSelect) {
   timezoneSelect.addEventListener('change', () => {
     saveSelectedTimezone(timezoneSelect.value);
     updateSelectedTimezoneDisplay();
+  });
+}
+
+if (titleFontSelect) {
+  titleFontSelect.value = selectedTitleFontSize;
+  titleFontSelect.addEventListener('change', () => {
+    selectedTitleFontSize = saveFontSize(TITLE_FONT_STORAGE_KEY, titleFontSelect.value, DEFAULT_TITLE_FONT_SIZE);
+    fitBandTitle();
+  });
+}
+
+if (descFontSelect) {
+  descFontSelect.value = selectedDescFontSize;
+  descFontSelect.addEventListener('change', () => {
+    selectedDescFontSize = saveFontSize(DESC_FONT_STORAGE_KEY, descFontSelect.value, DEFAULT_DESC_FONT_SIZE);
+    applyDescriptionFontSize();
   });
 }
 
@@ -2092,26 +2349,66 @@ function clearResults() {
   searchResults.innerHTML = '';
   searchResults.classList.remove('visible');
 }
+function splitTitlePrefixSuffix(title) {
+  const cleanTitle = String(title || '').trim();
+  if (!cleanTitle) return { prefix: '', suffix: '' };
+
+  const colonIndex = cleanTitle.indexOf(':');
+  if (colonIndex > 0 && colonIndex < cleanTitle.length - 1) {
+    return {
+      prefix: cleanTitle.slice(0, colonIndex).trim() + ':',
+      suffix: cleanTitle.slice(colonIndex + 1).trim()
+    };
+  }
+
+  const dashMatch = cleanTitle.match(/\s[-–—]\s/);
+  if (dashMatch && dashMatch.index > 0) {
+    return {
+      prefix: cleanTitle.slice(0, dashMatch.index).trim(),
+      suffix: cleanTitle.slice(dashMatch.index + dashMatch[0].length).trim()
+    };
+  }
+
+  const words = cleanTitle.split(/\s+/).filter(Boolean);
+  if (words.length < 2) return { prefix: cleanTitle, suffix: '' };
+
+  const halfLength = cleanTitle.length / 2;
+  let bestIndex = 1;
+  let bestDistance = Infinity;
+  for (let i = 1; i < words.length; i++) {
+    const currentLength = words.slice(0, i).join(' ').length;
+    const distance = Math.abs(currentLength - halfLength);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      bestIndex = i;
+    }
+  }
+
+  return {
+    prefix: words.slice(0, bestIndex).join(' '),
+    suffix: words.slice(bestIndex).join(' ')
+  };
+}
 function renderBandTitle(rawTitle) {
   const bandTitleEl = document.getElementById('band-title');
   const title = String(rawTitle || '').trim();
-  const colonIndex = title.indexOf(':');
+  const splitTitle = splitTitlePrefixSuffix(title);
   bandTitleEl.dataset.fullTitle = title;
-  bandTitleEl.dataset.sessionType = colonIndex > 0 ? title.slice(0, colonIndex).trim() : '';
-  bandTitleEl.dataset.mainTitle = colonIndex > 0 ? title.slice(colonIndex + 1).trim() : '';
+  bandTitleEl.dataset.sessionType = splitTitle.prefix;
+  bandTitleEl.dataset.mainTitle = splitTitle.suffix;
   bandTitleEl.style.fontSize = '';
   bandTitleEl.textContent = title;
 }
 function fitBandTitle() {
   const bandTitleEl = document.getElementById('band-title');
-  const maxFont = surface.classList.contains('size-3x5') ? 13 : 17;
-  const minFont = surface.classList.contains('size-3x5') ? 8 : 10;
+  const selectedFont = Number(selectedTitleFontSize) || Number(DEFAULT_TITLE_FONT_SIZE);
+  const titleFont = surface.classList.contains('size-3x5') ? Math.min(13, selectedFont) : selectedFont;
   const fullTitle = bandTitleEl.dataset.fullTitle || bandTitleEl.textContent || '';
   const sessionType = bandTitleEl.dataset.sessionType || '';
   const mainTitle = bandTitleEl.dataset.mainTitle || '';
 
   bandTitleEl.textContent = fullTitle;
-  bandTitleEl.style.fontSize = maxFont + 'px';
+  bandTitleEl.style.fontSize = titleFont + 'px';
   bandTitleEl.style.whiteSpace = 'nowrap';
   if (!bandTitleEl.clientWidth) return;
 
@@ -2120,26 +2417,14 @@ function fitBandTitle() {
   }
 
   if (!sessionType || !mainTitle) {
-    for (let size = maxFont; size >= minFont; size--) {
-      bandTitleEl.style.fontSize = size + 'px';
-      if (bandTitleEl.scrollWidth <= bandTitleEl.clientWidth) break;
-    }
     return;
   }
 
   bandTitleEl.innerHTML =
-    '<span class="band-title-session-type">' + escapeHtml(sessionType + ':') + '</span>' +
+    '<span class="band-title-session-type">' + escapeHtml(sessionType) + '</span>' +
     '<span class="band-title-main">' + escapeHtml(mainTitle) + '</span>';
+  bandTitleEl.style.fontSize = titleFont + 'px';
   bandTitleEl.style.whiteSpace = '';
-
-  for (let size = maxFont; size >= minFont; size--) {
-    bandTitleEl.style.fontSize = size + 'px';
-    const lines = Array.from(bandTitleEl.children);
-    const lineOverflow = lines.some(line => line.scrollWidth > line.clientWidth);
-    if (!lineOverflow && bandTitleEl.scrollWidth <= bandTitleEl.clientWidth) {
-      break;
-    }
-  }
 }
 function resetSearchState(message = 'Enter text in the search box to load a session.') {
   searchToken++;
@@ -2409,6 +2694,7 @@ function populateCard(row) {
   const tmp = document.createElement('div');
   tmp.innerHTML = row.description || '';
   descEl.textContent = tmp.textContent || tmp.innerText || '';
+  applyDescriptionFontSize();
 
   // Headshot
   const headshotImg = document.getElementById('headshot-img');
