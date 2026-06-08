@@ -7,6 +7,18 @@
       "partnerLogo": "__embedded_uoc_logo__",
       "partnerLogoAlt": "UChicago Medicine and Endeavor Health",
       "defaultTimezone": "CT",
+      "sessionBack": {
+        "seriesDate": "June 2026",
+        "featureTitle": "University of Chicago & Endeavor Health",
+        "featureProgram": "Amyloidosis Program",
+        "eyebrow": "UOC / Endeavor Amyloidosis Program",
+        "title": "Learn more about the June Spotlight series",
+        "primaryText": "Visit the microsite for program details, upcoming sessions, completed sessions, and clinical research information from the UOC and Endeavor amyloidosis teams.",
+        "secondaryHtml": "<strong>Use the microsite</strong> to review the series and share the resource with patients, caregivers, and families.",
+        "linkText": "uchicago.oneamyloidosisvoice.com",
+        "qrSrc": "__embedded_uoc_qr__",
+        "qrAlt": "Scan to visit uchicago.oneamyloidosisvoice.com"
+      },
       "colors": {
         "primary": "#8B1F2D",
         "primaryDark": "#6E1A24",
@@ -19,9 +31,22 @@
     "coh": {
       "label": "City of Hope",
       "exportSlug": "coh",
-      "partnerLogo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='330' height='70' viewBox='0 0 330 70'%3E%3Crect width='330' height='70' fill='white'/%3E%3Crect x='4' y='7' width='52' height='52' fill='%23005DAA'/%3E%3Cpath d='M30 17v31M19 28h22M22 20l16 26M38 20L22 46' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ctext x='68' y='44' font-family='Arial,Helvetica,sans-serif' font-size='32' fill='%23666666'%3ECity of Hope.%3C/text%3E%3C/svg%3E",
+      "partnerLogo": "coh_logo.svg",
       "partnerLogoAlt": "City of Hope",
       "defaultTimezone": "PT",
+      "sessionBack": {
+        "seriesDate": "July 2026",
+        "featureTitle": "City of Hope Amyloidosis Program",
+        "featureProgram": "",
+        "eyebrow": "City of Hope Amyloidosis Program",
+        "title": "Learn more about the July Spotlight series",
+        "primaryText": "Visit the microsite for program details, upcoming sessions, completed sessions, and clinical research information from the City of Hope amyloidosis team.",
+        "secondaryHtml": "<strong>Use the microsite</strong> to review the series and share the resource with patients, caregivers, and families.",
+        "linkText": "https://cityofhope.oneamyloidosisvoice.com/",
+        "qrSrc": "coh_microsite_qr.png",
+        "qrAlt": "Scan to visit https://cityofhope.oneamyloidosisvoice.com/",
+        "logos": [{ "src": "__partner_logo__", "alt": "City of Hope" }]
+      },
       "colors": {
         "primary": "#006E8E",
         "primaryDark": "#004F66",

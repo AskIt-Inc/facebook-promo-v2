@@ -38,7 +38,7 @@ index.html
 |-------|-------|--------|
 | Medical Amyloidosis Session - Spotlight | `foundation` | New 3-logo card |
 | Medical Amyloidosis Session - Non Spotlight | `classic` | Original card |
-| Session Registration Promo Card | `session-front` | Separate 4×6 registration front with June Spotlight microsite back |
+| Session Registration Promo Card | `session-front` | Separate 4×6 registration front with partner-specific Spotlight microsite back |
 
 Changing the dropdown calls `setLayout()` and then `resetSearchState()`: the search text is cleared, results are removed, controls/preview are hidden, and the user is prompted to enter a new search term.
 
@@ -160,7 +160,7 @@ Two sizes available via the size toggle buttons.
 
 The 3×5 variant uses a cascade of `.print-surface.size-3x5 .{component}` overrides to scale down every font, spacing, and image dimension proportionally. There are 20 override rules covering all zones.
 
-The `Session Registration Promo Card` layout is 4×6 only. Switching to that layout removes `.size-3x5`, disables the 3×5 control, and keeps export output at 1800 × 1200 px for the 300 DPI print target. The Front/Back buttons remain available: Front is the session registration card with presenter headshot, and Back is the June Spotlight microsite promo side. Both Front and Back headers show UOC, OAV, and STTT logos.
+The `Session Registration Promo Card` layout is 4×6 only. Switching to that layout removes `.size-3x5`, disables the 3×5 control, and keeps export output at 1800 × 1200 px for the 300 DPI print target. The Front/Back buttons remain available: Front is the session registration card with presenter headshot, and Back is the partner-specific Spotlight microsite promo side. Both Front and Back headers show STTT and OAV identity, with the partner feature area controlled by `sessionBack` config.
 
 ---
 
@@ -174,7 +174,7 @@ Switches between the three card types selected in `#session-card-type`.
 |----------------|----------------|---------------|-----------|
 | Medical Amyloidosis Session - Spotlight | `foundation` | `.layout-foundation` | New 3-logo header layout; partner logo moves to Zone 1; right logo defaults to OAV, then switches to matched indication logo when available |
 | Medical Amyloidosis Session - Non Spotlight | `classic` | `.layout-classic` | Original layout; partner logo moves back to the maroon band; right logo stays STTT; left logo switches to matched indication logo when available |
-| Session Registration Promo Card | `session-front` | `.layout-session-front` | Separate 4×6 card mode; Front uses session registration/privacy copy and Back promotes the June Spotlight microsite with a microsite QR |
+| Session Registration Promo Card | `session-front` | `.layout-session-front` | Separate 4×6 card mode; Front uses session registration/privacy copy and Back promotes the selected partner Spotlight microsite with a microsite QR |
 
 The dropdown `change` handler calls `resetSearchState()` after switching layout, so stale session data is never reused across card types.
 
@@ -266,6 +266,7 @@ Maps API response fields onto DOM elements. Detailed field-by-field mapping:
 | `row.qr_base64`        | `#qr-img`             | Set as `src`; toggles img/placeholder visibility               |
 | `row.short_url`        | `#register-url`       | Prefers short URL; falls back to `row.reg_link.url`; strips `https://`; truncates at 36 chars if no short URL |
 | Static UChicago link   | `#microsite-url`      | Displays `uchicago.oneamyloidosisvoice.com`; hidden on classic layout |
+| selected partner `sessionBack` config | `.session-back-side` | Updates the Session Registration Promo Card back side with partner-specific series month, feature title, microsite URL, QR image, and feature logo |
 
 **Card reveal:** On the first `populateCard()` call, `#controls-bar` and `#preview-wrapper` have their `display:none` removed, revealing the card and export controls.
 
