@@ -1,6 +1,34 @@
 {
   "defaultPartner": "uoc",
   "partners": {
+    "vamp": {
+      "label": "Vanderbilt (VAMP)",
+      "exportSlug": "vamp",
+      "partnerLogo": "vamp-logo.png",
+      "partnerLogoAlt": "Vanderbilt Amyloidosis Multidisciplinary Program",
+      "defaultTimezone": "CT",
+      "sessionBack": {
+        "seriesDate": "August 2026",
+        "featureTitle": "Vanderbilt Amyloidosis Multidisciplinary Program",
+        "featureProgram": "",
+        "eyebrow": "Vanderbilt Amyloidosis Multidisciplinary Program",
+        "title": "Learn more about the August Spotlight series",
+        "primaryText": "Visit the microsite for program details, upcoming sessions, completed sessions, and clinical research information from the Vanderbilt Amyloidosis Multidisciplinary Program team.",
+        "secondaryHtml": "<strong>Use the microsite</strong> to review the series and share the resource with patients, caregivers, and families.",
+        "linkText": "https://vanderbilt.oneamyloidosisvoice.com/",
+        "qrSrc": "vamp_microsite_qr.png",
+        "qrAlt": "Scan to visit https://vanderbilt.oneamyloidosisvoice.com/",
+        "logos": [{ "src": "__partner_logo__", "alt": "Vanderbilt Amyloidosis Multidisciplinary Program" }]
+      },
+      "colors": {
+        "primary": "#1C1C1C",
+        "primaryDark": "#111111",
+        "accent": "#CFAE70",
+        "borderAccent": "#E2D0A5",
+        "softBg": "#F8EFCF",
+        "sessionBandBg": "linear-gradient(135deg, #1C1C1C 0%, #2A2A2A 58%, #CFAE70 100%)"
+      }
+    },
     "uoc": {
       "label": "University of Chicago",
       "exportSlug": "uoc",
